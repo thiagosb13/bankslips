@@ -1,14 +1,32 @@
 package com.thiagobezerra.bankslips.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Entity
 public class BankSlip {
+	@Id
+	@GeneratedValue(generator = "UUID")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
 	private UUID id;
-	private Date dueDate;
+	
+	@JsonProperty("due_date")
+	private LocalDate dueDate;
+	
+	@JsonProperty("total_in_cents")
 	private BigDecimal totalInCents;
+	
 	private String customer;
+	
 	private Status status;
 
 	public UUID getId() {
@@ -19,11 +37,11 @@ public class BankSlip {
 		this.id = id;
 	}
 
-	public Date getDueDate() {
+	public LocalDate getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 
