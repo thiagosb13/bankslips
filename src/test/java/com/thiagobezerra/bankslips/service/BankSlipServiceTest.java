@@ -66,11 +66,15 @@ public class BankSlipServiceTest {
 	
 	@Test
 	public void whenRetrievingBankSlipByIdShouldGetItFromRepository() throws BankSlipNotFoundException {
-		doReturn(Optional.of(new BankSlip())).when(bankSlipRepository).findById(Mockito.any(UUID.class));
-		
+		BankSlipService mock = mock(BankSlipService.class, withSettings().useConstructor(bankSlipRepository, bankSlipValidator));
+		doCallRealMethod().when(mock).getDetailsById(Mockito.any(UUID.class));
+		BankSlip bankSlip = mock(BankSlip.class);
+		doReturn(Optional.of(bankSlip)).when(bankSlipRepository).findById(Mockito.any(UUID.class));
+		doNothing().when(mock).calculateFineRates(bankSlip);
+
 		UUID id = new UUID(10, 10);
 		
-		bankSlipService.getDetailsById(id);
+		mock.getDetailsById(id);
 		
 		verify(bankSlipRepository, only()).findById(id);
 	}	

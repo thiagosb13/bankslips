@@ -1,5 +1,7 @@
 package com.thiagobezerra.bankslips.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -59,6 +61,16 @@ public class BankSlipService {
 	}
 	
 	public void calculateFineRates(BankSlip bankSlip) {
+		int delayedDays = LocalDate.now().compareTo(bankSlip.getDueDate());
 		
+		BigDecimal fine = new BigDecimal("0"); 
+		
+		if (delayedDays > 10) {
+			fine = bankSlip.getTotalInCents().multiply(new BigDecimal("0.01"));
+		} else if (delayedDays > 0){
+			fine = bankSlip.getTotalInCents().multiply(new BigDecimal("0.005"));
+		}
+		
+		bankSlip.setFine(fine);
 	}
 }
