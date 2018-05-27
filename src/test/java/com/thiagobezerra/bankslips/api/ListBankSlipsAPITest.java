@@ -2,6 +2,7 @@ package com.thiagobezerra.bankslips.api;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -18,7 +19,6 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,6 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.thiagobezerra.bankslips.BankslipsApplication;
 import com.thiagobezerra.bankslips.model.BankSlip;
+import com.thiagobezerra.bankslips.model.BeanValidator;
 import com.thiagobezerra.bankslips.model.Status;
 import com.thiagobezerra.bankslips.service.BankSlipRepository;
 
@@ -49,6 +50,9 @@ public class ListBankSlipsAPITest {
 	@MockBean
 	private BankSlipRepository bankSlipRepository;
 	
+	@MockBean
+	private BeanValidator<BankSlip> validator;
+	
 	@Before
     public void setup() throws Exception {
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
@@ -56,7 +60,7 @@ public class ListBankSlipsAPITest {
 	
 	@Test
 	public void shouldReturnAllOfBankSlipsOnDatabase() throws Exception {
-		Mockito.when(bankSlipRepository.findAll()).thenReturn(bankslips());
+		when(bankSlipRepository.findAll()).thenReturn(bankslips());
 		
 		mockMvc.perform(get("/rest/bankslips/"))
 		       .andExpect(content().contentType(contentType))
