@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.Test;
+import org.springframework.http.MediaType;
 
 import com.thiagobezerra.bankslips.model.BankSlip;
 import com.thiagobezerra.bankslips.model.Status;
@@ -25,7 +26,7 @@ public class ListBankSlipsAPITest extends BaseBankSlipAPITest {
 		when(bankSlipService.listBankSlips()).thenReturn(bankslips());
 		
 		mockMvc.perform(get("/rest/bankslips/"))
-		       .andExpect(content().contentType(contentType))
+		       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 		       .andExpect(jsonPath("$", hasSize(2)))
 		       .andExpect(jsonPath("$[0].id", is("00000000-0000-03e8-0000-0000000007d0")))
 		       .andExpect(jsonPath("$[0].due_date", is("2018-05-01")))

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -54,10 +53,6 @@ public abstract class BaseBankSlipAPITest {
 
         assertThat(this.httpMessageConverter, notNullValue());
     }
-	
-	protected MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-													MediaType.APPLICATION_JSON.getSubtype(),
-													Charset.forName("utf8"));
 
 	protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();

@@ -39,7 +39,7 @@ class BankSlipController {
 	@GetMapping("/{id}")
 	ResponseEntity<?> getBankSlip(@PathVariable UUID id) {
 		try {
-			return ResponseEntity.ok(bankSlipService.findById(id));
+			return ResponseEntity.ok(bankSlipService.getDetailsById(id));
 		} catch (BankSlipNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}

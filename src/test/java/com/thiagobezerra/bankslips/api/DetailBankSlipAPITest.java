@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.http.MediaType;
 
 import com.thiagobezerra.bankslips.model.BankSlip;
 import com.thiagobezerra.bankslips.model.Status;
@@ -29,7 +30,7 @@ public class DetailBankSlipAPITest extends BaseBankSlipAPITest {
 	
 	@Test
 	public void whenABankSlipIsNotFoundShouldReturn404StatusCode() throws Exception {
-		doThrow(new BankSlipNotFoundException()).when(bankSlipService).findById(Mockito.any(UUID.class));
+		doThrow(new BankSlipNotFoundException()).when(bankSlipService).getDetailsById(Mockito.any(UUID.class));
 		
 		mockMvc.perform(get("/rest/bankslips/00000000-0000-03e8-0000-0000000007d0"))
 		       .andExpect(status().isNotFound());
@@ -37,7 +38,7 @@ public class DetailBankSlipAPITest extends BaseBankSlipAPITest {
 	
 	@Test
 	public void whenABankSlipIsFoundShouldReturn200StatusCode() throws Exception {
-		when(bankSlipService.findById(Mockito.any(UUID.class))).thenReturn(newBankSlip());
+		when(bankSlipService.getDetailsById(Mockito.any(UUID.class))).thenReturn(newBankSlip());
 		
 		mockMvc.perform(get("/rest/bankslips/00000000-0000-03e8-0000-0000000007d0"))
 		       .andExpect(status().isOk());
@@ -45,10 +46,10 @@ public class DetailBankSlipAPITest extends BaseBankSlipAPITest {
 	
 	@Test
 	public void whenABankSlipIsFoundShouldReturnIt() throws Exception {
-		when(bankSlipService.findById(Mockito.any(UUID.class))).thenReturn(newBankSlip());
+		when(bankSlipService.getDetailsById(Mockito.any(UUID.class))).thenReturn(newBankSlip());
 		
 		mockMvc.perform(get("/rest/bankslips/00000000-0000-03e8-0000-0000000007d0"))
-		       .andExpect(content().contentType(contentType))
+		       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 		       .andExpect(jsonPath("$.id", is("00000000-0000-03e8-0000-0000000007d0")))
 		       .andExpect(jsonPath("$.due_date", is("2018-05-01")))
 		       .andExpect(jsonPath("$.status", is("PENDING")))

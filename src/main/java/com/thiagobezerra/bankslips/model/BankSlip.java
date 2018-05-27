@@ -7,9 +7,12 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -29,6 +32,10 @@ public class BankSlip {
 	
 	private Status status;
 
+	@JsonInclude(Include.NON_NULL)
+	@Transient
+	private BigDecimal fine;
+	
 	public UUID getId() {
 		return id;
 	}
@@ -67,5 +74,13 @@ public class BankSlip {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public BigDecimal getFine() {
+		return fine;
+	}
+
+	public void setFine(BigDecimal fine) {
+		this.fine = fine;
 	}
 }

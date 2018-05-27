@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.http.MediaType;
 
 import com.thiagobezerra.bankslips.model.BankSlip;
 import com.thiagobezerra.bankslips.model.Status;
@@ -24,7 +25,7 @@ public class CreateBankSlipAPITest extends BaseBankSlipAPITest {
 		doNothing().when(bankSlipService).save(Mockito.any(BankSlip.class));
 		
 		mockMvc.perform(post("/rest/bankslips/").content(json(newBankSlip()))
-												.contentType(contentType))
+												.contentType(MediaType.APPLICATION_JSON_UTF8))
         										.andExpect(status().isCreated());
 	}
 	
@@ -33,7 +34,7 @@ public class CreateBankSlipAPITest extends BaseBankSlipAPITest {
 		doNothing().when(bankSlipService).save(Mockito.any(BankSlip.class));
 				
 		mockMvc.perform(post("/rest/bankslips/").content(json(newBankSlip()))
-												.contentType(contentType));
+												.contentType(MediaType.APPLICATION_JSON_UTF8));
 		
 		verify(bankSlipService, only()).save(Mockito.any(BankSlip.class));
 	}
@@ -41,7 +42,7 @@ public class CreateBankSlipAPITest extends BaseBankSlipAPITest {
 	@Test
 	public void whenBankSlipIsNotInformedShouldReturn400StatusCode() throws Exception {
 		mockMvc.perform(post("/rest/bankslips/").content(json(null))
-												.contentType(contentType))
+												.contentType(MediaType.APPLICATION_JSON_UTF8))
 												.andExpect(status().isBadRequest());
 	}
 	
@@ -50,7 +51,7 @@ public class CreateBankSlipAPITest extends BaseBankSlipAPITest {
 		doThrow(new InvalidBankSlipException()).when(bankSlipService).save(Mockito.any(BankSlip.class));
 		
 		mockMvc.perform(post("/rest/bankslips/").content(json(newBankSlip()))
-												.contentType(contentType))
+												.contentType(MediaType.APPLICATION_JSON_UTF8))
 												.andExpect(status().isUnprocessableEntity());
 	}
 	
