@@ -19,7 +19,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.thiagobezerra.bankslips.model.BankSlip;
-import com.thiagobezerra.bankslips.model.BankSlipValidator;
 import com.thiagobezerra.bankslips.model.Status;
 import com.thiagobezerra.bankslips.service.exception.BankSlipNotFoundException;
 import com.thiagobezerra.bankslips.service.exception.InvalidBankSlipException;

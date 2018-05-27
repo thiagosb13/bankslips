@@ -8,7 +8,6 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.thiagobezerra.bankslips.model.BankSlip;
-import com.thiagobezerra.bankslips.model.BeanValidator;
 import com.thiagobezerra.bankslips.model.Status;
 import com.thiagobezerra.bankslips.service.exception.BankSlipNotFoundException;
 import com.thiagobezerra.bankslips.service.exception.InvalidBankSlipException;

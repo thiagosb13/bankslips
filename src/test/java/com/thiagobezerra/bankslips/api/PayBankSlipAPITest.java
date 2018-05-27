@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 
+import com.thiagobezerra.bankslips.model.Status;
 import com.thiagobezerra.bankslips.model.StatusWrapper;
 import com.thiagobezerra.bankslips.service.exception.BankSlipNotFoundException;
 
@@ -30,18 +31,21 @@ public class PayBankSlipAPITest extends BaseBankSlipAPITest {
 	@Test
 	public void ifBankSlipIsValidShouldReturn200StatusCodeAfterPayIt() throws Exception {
 		mockMvc.perform(put("/rest/bankslips/00000000-0000-03e8-0000-0000000007d0")
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.content(json(StatusWrapper.PaidStatus())))
-		.andExpect(status().isOk());
+							.contentType(MediaType.APPLICATION_JSON_VALUE)
+							.content(json(StatusWrapper.PaidStatus())))
+ 	 		   .andExpect(status().isOk());
 		
 		verify(bankSlipService, only()).pay(Mockito.any(UUID.class));
 	}
 	
 	@Test
 	public void ifStatusIsDifferentFromCancelAndPaidShouldReturn422StatusCode() throws Exception {
+		StatusWrapper statusWrapper = new StatusWrapper();
+		statusWrapper.setStatus(Status.PENDING);
+		
 		mockMvc.perform(put("/rest/bankslips/00000000-0000-03e8-0000-0000000007d0")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.content(json(new StatusWrapper())))
+				.content(json(statusWrapper)))
 		.andExpect(status().isUnprocessableEntity());
 	}
 
@@ -56,10 +60,12 @@ public class PayBankSlipAPITest extends BaseBankSlipAPITest {
 	private class InvalidObject {
 		private String param;
 
+		@SuppressWarnings("unused")
 		public String getParam() {
 			return param;
 		}
 
+		@SuppressWarnings("unused")
 		public void setParam(String param) {
 			this.param = param;
 		}

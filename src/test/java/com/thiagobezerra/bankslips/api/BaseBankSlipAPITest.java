@@ -28,6 +28,7 @@ import com.thiagobezerra.bankslips.service.BankSlipService;
 @SpringBootTest(classes = BankslipsApplication.class)
 @WebAppConfiguration
 public abstract class BaseBankSlipAPITest {
+	@SuppressWarnings("rawtypes")
 	protected HttpMessageConverter httpMessageConverter;
 	
 	@Autowired
@@ -54,6 +55,7 @@ public abstract class BaseBankSlipAPITest {
         assertThat(this.httpMessageConverter, notNullValue());
     }
 
+	@SuppressWarnings("unchecked")
 	protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         this.httpMessageConverter.write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);

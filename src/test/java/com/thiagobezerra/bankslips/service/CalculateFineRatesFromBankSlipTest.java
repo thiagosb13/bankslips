@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import com.thiagobezerra.bankslips.model.BankSlip;
-import com.thiagobezerra.bankslips.model.BankSlipValidator;
 import com.thiagobezerra.bankslips.model.Status;
 
 public class CalculateFineRatesFromBankSlipTest {

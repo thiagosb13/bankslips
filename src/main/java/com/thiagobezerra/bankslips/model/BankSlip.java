@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,13 +25,17 @@ public class BankSlip {
 	private UUID id;
 	
 	@JsonProperty("due_date")
+	@NotNull
 	private LocalDate dueDate;
 	
 	@JsonProperty("total_in_cents")
+	@NotNull
 	private BigDecimal totalInCents;
 	
+	@NotBlank
 	private String customer;
 	
+	@NotNull
 	private Status status;
 
 	@JsonInclude(Include.NON_NULL)
