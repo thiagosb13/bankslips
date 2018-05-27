@@ -1,4 +1,4 @@
-package com.thiagobezerra.bankslips.api;
+package com.thiagobezerra.bankslips.model;
 
 import static org.junit.Assert.fail;
 

@@ -36,7 +36,7 @@ class BankSlipController {
 	@PostMapping
 	ResponseEntity<?> add(@RequestBody BankSlip bankSlip) {
 		if (!bankSlipValidator.isValid(bankSlip)) {
-			return ResponseEntity.unprocessableEntity().build();
+			return ResponseEntity.unprocessableEntity().body("Erro de validação.");
 		}
 		
 		bankSlipRepository.save(bankSlip);
