@@ -23,9 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.thiagobezerra.bankslips.BankslipsApplication;
-import com.thiagobezerra.bankslips.model.BankSlip;
-import com.thiagobezerra.bankslips.model.BeanValidator;
-import com.thiagobezerra.bankslips.service.BankSlipRepository;
+import com.thiagobezerra.bankslips.service.BankSlipService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BankslipsApplication.class)
@@ -37,10 +35,7 @@ public abstract class BaseBankSlipAPITest {
 	protected WebApplicationContext webApplicationContext;
 	
 	@MockBean
-	protected BeanValidator<BankSlip> validator;
-	
-	@MockBean
-	protected BankSlipRepository bankSlipRepository;
+	protected BankSlipService bankSlipService;
 	
 	protected MockMvc mockMvc;
 	

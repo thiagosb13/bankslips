@@ -22,7 +22,7 @@ import com.thiagobezerra.bankslips.model.Status;
 public class ListBankSlipsAPITest extends BaseBankSlipAPITest {
 	@Test
 	public void shouldReturnAllOfBankSlipsOnDatabase() throws Exception {
-		when(bankSlipRepository.findAll()).thenReturn(bankslips());
+		when(bankSlipService.listBankSlips()).thenReturn(bankslips());
 		
 		mockMvc.perform(get("/rest/bankslips/"))
 		       .andExpect(content().contentType(contentType))

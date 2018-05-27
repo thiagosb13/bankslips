@@ -1,8 +1,9 @@
 package com.thiagobezerra.bankslips.api;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -15,11 +16,12 @@ import org.mockito.Mockito;
 
 import com.thiagobezerra.bankslips.model.BankSlip;
 import com.thiagobezerra.bankslips.model.Status;
+import com.thiagobezerra.bankslips.service.exception.InvalidBankSlipException;
 
 public class CreateBankSlipAPITest extends BaseBankSlipAPITest {
 	@Test
 	public void whenCreateABankSplipShouldReturn201StatusCode() throws Exception {
-		when(validator.isValid(Mockito.any(BankSlip.class))).thenReturn(true);
+		doNothing().when(bankSlipService).save(Mockito.any(BankSlip.class));
 		
 		mockMvc.perform(post("/rest/bankslips/").content(json(newBankSlip()))
 												.contentType(contentType))
@@ -28,12 +30,12 @@ public class CreateBankSlipAPITest extends BaseBankSlipAPITest {
 	
 	@Test
 	public void whenBankSlipIsValidShouldPersistIt() throws Exception {
-		when(validator.isValid(Mockito.any(BankSlip.class))).thenReturn(true);
-		
+		doNothing().when(bankSlipService).save(Mockito.any(BankSlip.class));
+				
 		mockMvc.perform(post("/rest/bankslips/").content(json(newBankSlip()))
 												.contentType(contentType));
 		
-		verify(bankSlipRepository, only()).save(Mockito.any(BankSlip.class));
+		verify(bankSlipService, only()).save(Mockito.any(BankSlip.class));
 	}
 	
 	@Test
@@ -45,7 +47,7 @@ public class CreateBankSlipAPITest extends BaseBankSlipAPITest {
 	
 	@Test
 	public void whenBankSlipIsInvalidShouldReturn422StatusCode() throws Exception {
-		when(validator.isValid(Mockito.any(BankSlip.class))).thenReturn(false);
+		doThrow(new InvalidBankSlipException()).when(bankSlipService).save(Mockito.any(BankSlip.class));
 		
 		mockMvc.perform(post("/rest/bankslips/").content(json(newBankSlip()))
 												.contentType(contentType))
