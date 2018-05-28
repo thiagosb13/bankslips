@@ -57,7 +57,6 @@ class BankSlipController {
 												  .path("/{id}")
 												  .buildAndExpand(bankSlip.getId())
 												  .toUri();
-		
 		return ResponseEntity.created(location).build();
 	}
 	

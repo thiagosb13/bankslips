@@ -6,12 +6,14 @@ import java.util.Collection;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.thiagobezerra.bankslips.model.BankSlip;
 import com.thiagobezerra.bankslips.model.Status;
 import com.thiagobezerra.bankslips.service.exception.BankSlipNotFoundException;
 import com.thiagobezerra.bankslips.service.exception.InvalidBankSlipException;
 
+@Component
 public class BankSlipService {
 
 	private final BankSlipRepository bankSlipRepository;
