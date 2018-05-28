@@ -2,6 +2,7 @@ package com.thiagobezerra.bankslips.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -15,7 +16,6 @@ import com.thiagobezerra.bankslips.service.exception.InvalidBankSlipException;
 
 @Component
 public class BankSlipService {
-
 	private final BankSlipRepository bankSlipRepository;
 	private final BeanValidator<BankSlip> bankSlipValidator;
 	
@@ -38,12 +38,14 @@ public class BankSlipService {
 	}
 
 	public BankSlip getDetailsById(UUID id) throws BankSlipNotFoundException {
-		BankSlip bankSlip = bankSlipRepository.findById(id)
-											  .orElseThrow(() -> new BankSlipNotFoundException());
-					
+		BankSlip bankSlip = findById(id);
 		calculateFineRates(bankSlip);
-		
 		return bankSlip;
+	}
+	
+	private BankSlip findById(UUID id) throws BankSlipNotFoundException {
+	    return bankSlipRepository.findById(id)
+	                             .orElseThrow(() -> new BankSlipNotFoundException());
 	}
 	
 	public void pay(UUID id) throws BankSlipNotFoundException {
@@ -55,14 +57,13 @@ public class BankSlipService {
 	}
 	
 	public void update(UUID id, Status status) throws BankSlipNotFoundException {
-		BankSlip bankSlip = bankSlipRepository.findById(id)
-				  							  .orElseThrow(() -> new BankSlipNotFoundException());
+		BankSlip bankSlip = findById(id);
 		bankSlip.setStatus(status);
 		bankSlipRepository.save(bankSlip);
 	}
 	
 	public void calculateFineRates(BankSlip bankSlip) {
-		int delayedDays = LocalDate.now().compareTo(bankSlip.getDueDate());
+		long delayedDays = ChronoUnit.DAYS.between(bankSlip.getDueDate(), LocalDate.now());
 		
 		BigDecimal fine = new BigDecimal("0"); 
 		

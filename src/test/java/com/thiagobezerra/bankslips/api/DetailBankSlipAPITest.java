@@ -51,7 +51,7 @@ public class DetailBankSlipAPITest extends BaseBankSlipAPITest {
 		mockMvc.perform(get("/rest/bankslips/00000000-0000-03e8-0000-0000000007d0"))
 		       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 		       .andExpect(jsonPath("$.id", is("00000000-0000-03e8-0000-0000000007d0")))
-		       .andExpect(jsonPath("$.due_date", is("2018-05-01")))
+		       .andExpect(jsonPath("$.due_date", is("2018-01-01")))
 		       .andExpect(jsonPath("$.status", is("PENDING")))
 		       .andExpect(jsonPath("$.total_in_cents", is(10000)))
 		       .andExpect(jsonPath("$.customer", is("Customer 01")));
@@ -59,7 +59,7 @@ public class DetailBankSlipAPITest extends BaseBankSlipAPITest {
 	
 	private BankSlip newBankSlip() {
 		BankSlip bankslip = new BankSlip();
-		bankslip.setDueDate(LocalDate.of(2018, 5, 1));
+		bankslip.setDueDate(LocalDate.of(2018, 1, 1));
 		bankslip.setStatus(Status.PENDING);
 		bankslip.setTotalInCents(new BigDecimal("10000"));
 		bankslip.setId(new UUID(1000, 2000));

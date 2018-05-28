@@ -1,4 +1,4 @@
-package com.thiagobezerra.bankslips.model;
+package com.thiagobezerra.bankslips.service;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -9,6 +9,8 @@ import java.util.UUID;
 
 import org.junit.Test;
 
+import com.thiagobezerra.bankslips.model.BankSlip;
+import com.thiagobezerra.bankslips.model.Status;
 import com.thiagobezerra.bankslips.service.BankSlipValidator;
 
 public class BankSlipValidatorTest {

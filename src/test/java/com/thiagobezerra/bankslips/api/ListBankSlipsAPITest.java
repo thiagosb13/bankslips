@@ -2,6 +2,7 @@ package com.thiagobezerra.bankslips.api;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -38,6 +39,11 @@ public class ListBankSlipsAPITest extends BaseBankSlipAPITest {
 		       .andExpect(jsonPath("$[1].status", is("PAID")))
 		       .andExpect(jsonPath("$[1].total_in_cents", is(20000)))
 		       .andExpect(jsonPath("$[1].customer", is("Customer 02")));
+	}
+	
+	@Test
+	public void shouldNotSerializeStatusWhenListingBankSlips() {
+	    fail();
 	}
 	
 	@Test

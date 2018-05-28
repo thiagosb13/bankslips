@@ -60,7 +60,6 @@ public class CalculateFineRatesFromBankSlipTest {
 	
 	private BankSlip newBankSlip() {
 		BankSlip bankslip = new BankSlip();
-		bankslip.setDueDate(LocalDate.of(2018, 5, 1));
 		bankslip.setStatus(Status.PENDING);
 		bankslip.setTotalInCents(new BigDecimal("10000"));
 		bankslip.setId(new UUID(1000, 2000));
