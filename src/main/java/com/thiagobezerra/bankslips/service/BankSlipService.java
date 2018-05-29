@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,9 @@ public class BankSlipService {
 	}
 	
 	public Collection<BankSlip> listBankSlips() {
-		return bankSlipRepository.findAll();
+		List<BankSlip> bankSlips = bankSlipRepository.findAll();
+		bankSlips.stream().forEach(f -> f.setStatus(null));
+		return bankSlips;
 	}
 	
 	public void save(BankSlip bankSlip) throws InvalidBankSlipException {

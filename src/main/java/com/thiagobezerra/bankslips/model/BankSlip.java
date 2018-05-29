@@ -36,7 +36,8 @@ public class BankSlip {
 	
 	@NotBlank
 	private String customer;
-	
+
+	@JsonInclude(Include.NON_NULL)
 	@NotNull
 	private Status status;
 

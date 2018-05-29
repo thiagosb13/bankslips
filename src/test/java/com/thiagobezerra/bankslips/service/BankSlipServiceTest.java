@@ -1,5 +1,8 @@
 package com.thiagobezerra.bankslips.service;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -8,6 +11,11 @@ import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.withSettings;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,6 +51,17 @@ public class BankSlipServiceTest {
 		bankSlipService.listBankSlips();
 		
 		verify(bankSlipRepository, only()).findAll();
+	}
+	
+	@Test
+	public void shouldNotSerializeStatusWhenListingBankSlips() {
+	    doReturn(bankslips()).when(bankSlipRepository).findAll();
+	    
+	    Collection<BankSlip> bankSlips = bankSlipService.listBankSlips();
+	    
+	    assertThat(bankSlips.size(), is(2));
+	    assertThat(bankSlips.iterator().next().getStatus(), nullValue());
+	    assertThat(bankSlips.iterator().next().getStatus(), nullValue());
 	}
 	
 	@Test(expected = InvalidBankSlipException.class)
@@ -166,5 +185,23 @@ public class BankSlipServiceTest {
 		
 		verify(bankSlip).setStatus(Status.PAID);
 		verify(bankSlipRepository).save(bankSlip);
+	}
+	
+	private List<BankSlip> bankslips() {
+		BankSlip bankslip01 = new BankSlip();
+		bankslip01.setDueDate(LocalDate.of(2018, 5, 1));
+		bankslip01.setStatus(Status.PENDING);
+		bankslip01.setTotalInCents(new BigDecimal("10000"));
+		bankslip01.setId(new UUID(1000, 2000));
+		bankslip01.setCustomer("Customer 01");
+
+		BankSlip bankslip02 = new BankSlip();
+		bankslip02.setDueDate(LocalDate.of(2018, 5, 10));
+		bankslip02.setStatus(Status.PAID);
+		bankslip02.setTotalInCents(new BigDecimal("20000"));
+		bankslip02.setId(new UUID(2000, 3000));
+		bankslip02.setCustomer("Customer 02");
+		
+		return Arrays.asList(bankslip01, bankslip02);
 	}
 }
